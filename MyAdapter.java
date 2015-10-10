@@ -51,7 +51,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 .inflate(R.layout.cards_layout, parent, false);
 
         //view.setOnClickListener(MainActivity.myOnClickListener);
-        view.setPadding(18, 18, 18, 18);
+        view.setPadding(10, 20, 10, 0);
+
 
         MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;

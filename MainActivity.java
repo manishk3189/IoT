@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
 
-        setContentView(R.layout.activity_launch);
+        setContentView(R.layout.activity_grid);
 
 
         recyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
