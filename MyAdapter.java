@@ -66,11 +66,37 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         final TextView summary = holder.textViewValue;
         final CardView cardView = holder.cv;
 
+        int color = 0;
+        if(listPosition == 0) {
+            color = setColor(0);
+            cardView.setBackgroundColor(CategoryDetails.myTempColors.get(color));
+        }
+        if(listPosition == 1) {
+            color = setColor(1);
+            cardView.setBackgroundColor(CategoryDetails.myAmbientColors.get(color));
+        }
+        if (listPosition == 0) {
+
+
+            summary.setText(CategoryDetails.temperature + " \u2109");
+        }
+        if (listPosition == 1) {
+
+            Double num1 = Double.parseDouble(CategoryDetails.ambient);
+            Math.round(num1);
+            summary.setText(num1.toString());
+        }
+        if (listPosition == 2) {
+            cardView.setBackgroundResource(R.mipmap.blind_half);
+            summary.setText(CategoryDetails.blind);
+        }
+
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SendJSONRequest().execute("getAmbient");
                 new SendJSONRequest().execute("getTemp");
+                new SendJSONRequest().execute("getBlindState");
                 int color = 0;
                 if(listPosition == 0) {
                     color = setColor(0);
@@ -83,16 +109,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 if (listPosition == 0) {
 
 
-                    summary.setText(MainActivity.temperature + " \u2109");
+                    summary.setText(CategoryDetails.temperature + " \u2109");
                 }
                 if (listPosition == 1) {
 
-                    Double num1 = Double.parseDouble(MainActivity.ambient);
+                    Double num1 = Double.parseDouble(CategoryDetails.ambient);
                     Math.round(num1);
                     summary.setText(num1.toString());
                 }
                 if (listPosition == 2) {
-                    summary.setText("");
+
+                    summary.setText(CategoryDetails.blind);
                 }
 
             }
@@ -110,14 +137,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         if(listPosition == 0) {
 
-            summary.setText(MainActivity.temperature);
+            summary.setText(CategoryDetails.temperature);
         }
         if(listPosition == 1) {
 
-            summary.setText(MainActivity.ambient);
+            summary.setText(CategoryDetails.ambient);
         }
         if(listPosition == 2) {
-            summary.setText("");
+            summary.setText(CategoryDetails.blind);
         }
 
 
@@ -134,7 +161,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         switch(position) {
 
             case 0 :
-            double num = Double.parseDouble(MainActivity.temperature);
+            double num = Double.parseDouble(CategoryDetails.temperature);
             if (num < 40) //freezing
                 return 0;
             if (num >= 40 && num < 68) //cold
@@ -146,7 +173,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             if (num >= 85) //Summer Hot
                 return 4;
             break;
-            case 1: double num1 = Double.parseDouble(MainActivity.ambient);
+            case 1: double num1 = Double.parseDouble(CategoryDetails.ambient);
                 if(num1 >=0 && num1 < 33)
                     return 0;
                 if(num1 >= 33 && num1 < 66)

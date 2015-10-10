@@ -50,6 +50,9 @@ static ArrayList<Integer> myTempColors = new ArrayList<Integer>(Arrays.asList(
                 Integer.valueOf(Color.parseColor("#78909C")))); // Orange A400
 
 
+        static String ambient ;
+        static String temperature;
+        static String blind;
 }
 
 

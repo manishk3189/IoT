@@ -30,8 +30,9 @@ public class MainActivity extends Activity {
     private static ArrayList<CategoryData> categories;
     private static String TAG = "MainActivity";
     private String temp;
-    public static String temperature;
-    public static String ambient;
+    //public static String temperature;
+    //public static String ambient;
+    //public static String blind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +83,9 @@ public class MainActivity extends Activity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            Log.d(TAG + "TEMP",temperature);
-            Log.d(TAG + "Ambient",ambient);
+            new SendJSONRequest().execute("getAmbient");
+            new SendJSONRequest().execute("getTemp");
+            new SendJSONRequest().execute("getBlindState");
             return true;
         }
 
