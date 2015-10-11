@@ -93,7 +93,7 @@ public class MainActivity extends Activity {
         }
 
         if(id == R.id.rules) {
-            Intent i = new Intent(MainActivity.this, RuleActivity.class);
+            Intent i = new Intent(MainActivity.this, ListDisplay.class);
             startActivity(i);
         }
 

@@ -51,11 +51,13 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
         @Override
     public void onClick(View v) {
             pos = getPosition();
-            categoryDataSet.remove(getPosition());
-            notifyItemRemoved(getPosition());
-            new SendJSONRequest().execute("remove");
-            Intent i = new Intent(context,RuleActivity.class);
-            context.startActivity(i);
+            Log.d(TAG,pos+"");
+            categoryDataSet.remove(pos);
+            notifyItemRemoved(pos);
+            //new SendJSONRequest().execute("remove");
+
+            //finish();
+//            context.startActivity(i);
         }
     }
 
