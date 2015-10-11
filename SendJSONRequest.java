@@ -52,9 +52,10 @@ public class SendJSONRequest extends AsyncTask<String, String, String> {
         }
         else if(callType.contains("getBlindState"))
             CategoryDetails.blind = response_txt;
-        else {
+        else if (callType.contains("getRules")) {
             CategoryDetails.receivedRules = response_txt;
         }
+
 
     }
 

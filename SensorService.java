@@ -34,19 +34,7 @@ public class SensorService extends Service {
             public void run() {
 
 
-                //Your logic that service will perform will be placed here
-                //In this example we are just looping and waits for 1000 milliseconds in each loop.
-                for (int i = 0; i < 5; i++) {
-                    try {
-                        Log.d(TAG,"I am alive");
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-                    }
 
-                    if(isRunning){
-                        Log.i(TAG, "Service running");
-                    }
-                }
 
 
             }

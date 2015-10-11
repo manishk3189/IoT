@@ -3,6 +3,9 @@ package com.example.abgomsale.iot;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import android.util.Log;
 
@@ -39,12 +42,28 @@ public class JSONHandler {
 
 		// Sending an example "getTime" request:
 		// Construct new request
-
 		int requestID = 0;
-		JSONRPC2Request request = new JSONRPC2Request(method, requestID);
-		if(request.getMethod().equalsIgnoreCase("remove")) {
+		JSONRPC2Request request;
+		if(method.contains("remove")) {
+			/*method = method + "," + ListDisplay.itemDeletePosition;*/
+			List<Object> remove_index = new ArrayList<>();
+
+			remove_index.add(ListDisplay.itemDeletePosition);
+			request = new JSONRPC2Request(method, remove_index, requestID);
+
+
 			//request.setParams(MyListAdapter.pos);
+		} else if (method.contains("addRule")) {
+			List<Object> rules = new ArrayList<>();
+
+			rules.add(AddRule.rule);
+			request = new JSONRPC2Request(method, rules, requestID);
 		}
+
+		else
+			request = new JSONRPC2Request(method, requestID);
+
+
 
 		// Send request
 		JSONRPC2Response response = null;

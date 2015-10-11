@@ -3,10 +3,13 @@ import java.util.ArrayList;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -225,10 +228,11 @@ public class ListDisplay extends ListActivity {
             //CategoryDetails.receivedRules = builder;
 
             Log.d
-                    (TAG," after delete receivedRules:" + CategoryDetails.receivedRules);
+                    (TAG, " after delete receivedRules:" + CategoryDetails.receivedRules);
 
 
-            //new SendJSONRequest().execute("remove");
+            String method = "request"+","+itemDeletePosition;
+            new SendJSONRequest().execute("remove");
             return null;
 
         }
@@ -248,5 +252,29 @@ public class ListDisplay extends ListActivity {
 
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_list_display, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.rule_add) {
+            Intent i = new Intent(ListDisplay.this,AddRule.class);
+            startActivity(i);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

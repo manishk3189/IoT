@@ -93,6 +93,7 @@ public class MainActivity extends Activity {
         }
 
         if(id == R.id.rules) {
+            new SendJSONRequest().execute("getRules");
             Intent i = new Intent(MainActivity.this, ListDisplay.class);
             startActivity(i);
         }
