@@ -42,6 +42,9 @@ public class JSONHandler {
 
 		int requestID = 0;
 		JSONRPC2Request request = new JSONRPC2Request(method, requestID);
+		if(request.getMethod().equalsIgnoreCase("remove")) {
+			request.setParams(MyListAdapter.pos);
+		}
 
 		// Send request
 		JSONRPC2Response response = null;

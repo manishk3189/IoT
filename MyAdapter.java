@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
+import java.util.Random;
 
 
 /**
@@ -88,8 +88,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             summary.setText(num1.toString());
         }
         if (listPosition == 2) {
-            cardView.setBackgroundResource(R.mipmap.blind_half);
+            //cardView.setBackgroundResource(R.mipmap.blind_half);
             summary.setText(CategoryDetails.blind);
+            Random r = new Random();
+            int num = r.nextInt(18);
+            Log.d(TAG, " randomn number" + num);
+            //cardView.setCardBackgroundColor(CategoryDetails.myCardColors.get(num));
         }
 
         holder.cv.setOnClickListener(new View.OnClickListener() {
@@ -115,12 +119,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 if (listPosition == 1) {
 
                     Double num1 = Double.parseDouble(CategoryDetails.ambient);
-                    Math.round(num1);
+
                     summary.setText(num1.toString());
                 }
                 if (listPosition == 2) {
 
+                    Random random = new Random();
+                    int number = random.nextInt(CategoryDetails.myCardColors.size());
                     summary.setText(CategoryDetails.blind);
+                    cardView.setCardBackgroundColor(CategoryDetails.myCardColors.get(number));
                 }
 
             }
@@ -130,8 +137,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         Log.d(TAG, listPosition + "");
 
         textViewCategory.setText(temp_text);
-
-
 
         summary.setTextColor(Color.WHITE);
 
@@ -145,7 +150,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             summary.setText(CategoryDetails.ambient);
         }
         if(listPosition == 2) {
+            Random random = new Random();
+            int number = random.nextInt(CategoryDetails.myCardColors.size());
             summary.setText(CategoryDetails.blind);
+            int x = (int)(Math.random()*100000) % 18;
+            cardView.setCardBackgroundColor(CategoryDetails.myCardColors.get(x));
         }
 
 

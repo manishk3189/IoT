@@ -27,6 +27,9 @@ public class LaunchActivity extends Activity {
         new SendJSONRequest().execute("getAmbient");
         new SendJSONRequest().execute("getTemp");
         new SendJSONRequest().execute("getBlindState");
+        new SendJSONRequest().execute("getRules");
+        Intent service_intent = new Intent(LaunchActivity.this,SensorService.class);
+        startService(service_intent);
 
         new Handler().postDelayed(new Runnable() {
 

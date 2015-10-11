@@ -53,6 +53,10 @@ static ArrayList<Integer> myTempColors = new ArrayList<Integer>(Arrays.asList(
         static String ambient ;
         static String temperature;
         static String blind;
+
+
+        static String receivedRules;
+
 }
 
 

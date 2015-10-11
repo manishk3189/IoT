@@ -2,6 +2,7 @@ package com.example.abgomsale.iot;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -17,7 +18,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import net.sourceforge.jFuzzyLogic.rule.Rule;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 
 public class MainActivity extends Activity {
@@ -30,6 +35,7 @@ public class MainActivity extends Activity {
     private static ArrayList<CategoryData> categories;
     private static String TAG = "MainActivity";
     private String temp;
+    public static List<Integer> randomNumbers;
     //public static String temperature;
     //public static String ambient;
     //public static String blind;
@@ -83,10 +89,12 @@ public class MainActivity extends Activity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            new SendJSONRequest().execute("getAmbient");
-            new SendJSONRequest().execute("getTemp");
-            new SendJSONRequest().execute("getBlindState");
             return true;
+        }
+
+        if(id == R.id.rules) {
+            Intent i = new Intent(MainActivity.this, RuleActivity.class);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
@@ -108,5 +116,45 @@ public class MainActivity extends Activity {
 		}
 
 	}
+
+    @Override
+    public void onPause(){
+        Intent service_intent = new Intent(MainActivity.this,SensorService.class);
+        stopService(service_intent);
+        super.onPause();
+
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        Intent service_intent = new Intent(MainActivity.this,SensorService.class);
+        stopService(service_intent);
+        super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Intent service_intent = new Intent(MainActivity.this,SensorService.class);
+        startService(service_intent);
+
+    }
+
+    public void getRandomNumber() {
+
+        Random random = new Random();
+        int count = 8;
+        randomNumbers = new ArrayList<Integer>(count);
+        for (int i = 0; i < count; i++) {
+            int number;
+            do {
+                number = random.nextInt(CategoryDetails.myCardColors.size());
+            } while (randomNumbers.contains(number));
+            randomNumbers.add(number);
+        }
+
+
+    }
 
 }

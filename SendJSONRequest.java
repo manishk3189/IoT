@@ -41,19 +41,21 @@ public class SendJSONRequest extends AsyncTask<String, String, String> {
     protected void onPostExecute(String result) {
         Log.d("debug", result);
         Log.d("debug", response_txt);
-        Log.d(TAG, "Temp : " + response_txt);
+        Log.d(TAG,   callType+" "+ response_txt);
 
         if(callType.contains("getTemp"))
-            //MainActivity.temperature = response_txt;
+
         CategoryDetails.temperature = response_txt;
-        if(callType.contains("getAmbient")) {
-           // MainActivity.ambient = response_txt;
+        else if(callType.contains("getAmbient")) {
+
             CategoryDetails.ambient = response_txt;
         }
-
-        if(callType.contains("getBlindState"))
-            //MainActivity.blind = response_txt;
+        else if(callType.contains("getBlindState"))
             CategoryDetails.blind = response_txt;
+        else {
+            CategoryDetails.receivedRules = response_txt;
+        }
+
     }
 
 }
