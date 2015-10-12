@@ -44,10 +44,10 @@ public class JSONHandler {
         int requestID = 0;
         JSONRPC2Request request;
         if (method.contains("remove")) {
-            /*method = method + "," + ListDisplay.itemDeletePosition;*/
+
             List<Object> remove_index = new ArrayList<>();
 
-            remove_index.add(ListDisplay.itemDeletePosition);
+            remove_index.add(ListDisplayActivity.itemDeletePosition);
             request = new JSONRPC2Request(method, remove_index, requestID);
 
 
@@ -55,7 +55,7 @@ public class JSONHandler {
         } else if (method.contains("addRule")) {
             List<Object> rules = new ArrayList<>();
 
-            rules.add(AddRule.rule);
+            rules.add(AddRuleActivity.rule);
             request = new JSONRPC2Request(method, rules, requestID);
         } else
             request = new JSONRPC2Request(method, requestID);

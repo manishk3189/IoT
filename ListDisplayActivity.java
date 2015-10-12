@@ -17,10 +17,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class ListDisplay extends ListActivity {
+public class ListDisplayActivity extends ListActivity {
     ProgressDialog dialog;
 
-    private static String TAG = "ListDisplay";
+    private static String TAG = "ListDisplayActivity";
     public ArrayList list = new ArrayList();
     private static ArrayList<CategoryData> categories;
     public static int itemDeletePosition;
@@ -127,7 +127,7 @@ public class ListDisplay extends ListActivity {
 
         @Override
         protected void onPreExecute() {
-            mProgDialog = ProgressDialog.show(ListDisplay.this, "", "Loading the latest rules, Please wait....", true);
+            mProgDialog = ProgressDialog.show(ListDisplayActivity.this, "", "Loading the latest rules, Please wait....", true);
             new SendJSONRequest().execute("getRules");
         }
 
@@ -197,7 +197,7 @@ public class ListDisplay extends ListActivity {
 
         @Override
         protected void onPreExecute() {
-            mProgDialog = ProgressDialog.show(ListDisplay.this, "", "Refreshing the rules, Please wait....", true);
+            mProgDialog = ProgressDialog.show(ListDisplayActivity.this, "", "Refreshing the rules, Please wait....", true);
         }
 
         @Override
@@ -276,7 +276,7 @@ public class ListDisplay extends ListActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.rule_add) {
-            Intent i = new Intent(ListDisplay.this, AddRule.class);
+            Intent i = new Intent(ListDisplayActivity.this, AddRuleActivity.class);
             startActivity(i);
             return true;
         }

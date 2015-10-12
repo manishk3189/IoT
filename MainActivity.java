@@ -29,9 +29,7 @@ public class MainActivity extends Activity {
     private static String TAG = "MainActivity";
     private String temp;
     public static List<Integer> randomNumbers;
-    //public static String temperature;
-    //public static String ambient;
-    //public static String blind;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +85,7 @@ public class MainActivity extends Activity {
 
         if (id == R.id.rules) {
             new SendJSONRequest().execute("getRules");
-            Intent i = new Intent(MainActivity.this, ListDisplay.class);
+            Intent i = new Intent(MainActivity.this, ListDisplayActivity.class);
             startActivity(i);
         }
 

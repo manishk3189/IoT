@@ -20,7 +20,7 @@ import java.util.List;
  * Add the fuzzy logic rule to the exisiting rule block.
  * Perform Validation if rule is already exisitng, do not add the rule and notify user.
  */
-public class AddRule extends Activity {
+public class AddRuleActivity extends Activity {
 
     private Spinner temp_spinner, connector_spinner, ambient_spinner, blind_spinner;
     private Button save_rule;
@@ -80,7 +80,7 @@ public class AddRule extends Activity {
                             new SendJSONRequest().execute("getRules");
 
 
-                            Intent i = new Intent(AddRule.this, MainActivity.class);
+                            Intent i = new Intent(AddRuleActivity.this, MainActivity.class);
                             startActivity(i);
                         } catch (Exception e) {
                         }
