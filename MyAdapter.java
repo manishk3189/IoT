@@ -18,6 +18,9 @@ import java.util.Random;
  * Created by mani8177 on 7/16/15.
  */
 
+/**
+ * Adapter to load the cards on the fly dynamically
+ */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private ArrayList<CategoryData> categoryDataSet;
@@ -50,7 +53,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cards_layout, parent, false);
 
-        //view.setOnClickListener(MainActivity.myOnClickListener);
         view.setPadding(10, 20, 10, 0);
 
 
@@ -68,11 +70,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         final CardView cardView = holder.cv;
 
         int color = 0;
-        if(listPosition == 0) {
+        if (listPosition == 0) {
             color = setColor(0);
             cardView.setBackgroundColor(CategoryDetails.myTempColors.get(color));
         }
-        if(listPosition == 1) {
+        if (listPosition == 1) {
             color = setColor(1);
             cardView.setBackgroundColor(CategoryDetails.myAmbientColors.get(color));
         }
@@ -103,11 +105,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 new SendJSONRequest().execute("getTemp");
                 new SendJSONRequest().execute("getBlindState");
                 int color = 0;
-                if(listPosition == 0) {
+                if (listPosition == 0) {
                     color = setColor(0);
                     cardView.setBackgroundColor(CategoryDetails.myTempColors.get(color));
                 }
-                if(listPosition == 1) {
+                if (listPosition == 1) {
                     color = setColor(1);
                     cardView.setBackgroundColor(CategoryDetails.myAmbientColors.get(color));
                 }
@@ -141,19 +143,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         summary.setTextColor(Color.WHITE);
 
 
-        if(listPosition == 0) {
+        if (listPosition == 0) {
 
             summary.setText(CategoryDetails.temperature);
         }
-        if(listPosition == 1) {
+        if (listPosition == 1) {
 
             summary.setText(CategoryDetails.ambient);
         }
-        if(listPosition == 2) {
+        if (listPosition == 2) {
             Random random = new Random();
             int number = random.nextInt(CategoryDetails.myCardColors.size());
             summary.setText(CategoryDetails.blind);
-            int x = (int)(Math.random()*100000) % 18;
+            int x = (int) (Math.random() * 100000) % 18;
             cardView.setCardBackgroundColor(CategoryDetails.myCardColors.get(x));
         }
 
@@ -166,29 +168,30 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
 
-    public int setColor( int position) {
+    public int setColor(int position) {
 
-        switch(position) {
+        switch (position) {
 
-            case 0 :
-            double num = Double.parseDouble(CategoryDetails.temperature);
-            if (num < 40) //freezing
-                return 0;
-            if (num >= 40 && num < 68) //cold
-                return 1;
-            if (num >= 68 && num <= 77) //normal
-                return 2;
-            if (num > 77 && num < 85) //warm
-                return 3;
-            if (num >= 85) //Summer Hot
-                return 4;
-            break;
-            case 1: double num1 = Double.parseDouble(CategoryDetails.ambient);
-                if(num1 >=0 && num1 < 33)
+            case 0:
+                double num = Double.parseDouble(CategoryDetails.temperature);
+                if (num < 40) //freezing
                     return 0;
-                if(num1 >= 33 && num1 < 66)
+                if (num >= 40 && num < 68) //cold
                     return 1;
-                if(num1 >=66)
+                if (num >= 68 && num <= 77) //normal
+                    return 2;
+                if (num > 77 && num < 85) //warm
+                    return 3;
+                if (num >= 85) //Summer Hot
+                    return 4;
+                break;
+            case 1:
+                double num1 = Double.parseDouble(CategoryDetails.ambient);
+                if (num1 >= 0 && num1 < 33)
+                    return 0;
+                if (num1 >= 33 && num1 < 66)
+                    return 1;
+                if (num1 >= 66)
                     return 2;
                 break;
 

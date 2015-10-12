@@ -1,11 +1,7 @@
 package com.example.abgomsale.iot;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
-import android.nfc.Tag;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,27 +11,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
-
+/**
+ *
+ */
 public class RuleActivity extends Activity {
 
-    static View.OnClickListener myOnClickListener;
+
     private static RecyclerView.Adapter adapter;
     private static RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
     private static ArrayList<CategoryData> categories;
     private static String TAG = "RuleActivity";
-    public static ImageButton imageButton;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //myOnClickListener = new MyOnClickListener(this);
 
         setContentView(R.layout.activity_rule);
         recyclerView = (RecyclerView) findViewById(R.id.list_recycler);
@@ -48,16 +43,16 @@ public class RuleActivity extends Activity {
 
         tempArray = CategoryDetails.receivedRules.split(" ");
         for(int i = 0; i < tempArray.length; i++) {
-            Log.d(TAG, "index "+ i + " " + tempArray[i]);
+            Log.d(TAG, "index " + i + " " + tempArray[i]);
         }
-        Log.d(TAG, (String.valueOf( tempArray.length)));
+        Log.d(TAG, (String.valueOf(tempArray.length)));
         ArrayList<String> parsedrules = new ArrayList<>();
 
 
         String temp;
-        for(int i = 0; i <= tempArray.length - 4; i = i+4) {
-            temp = tempArray[i]+ " " + tempArray[i+1] + " " + tempArray[i+2] + " " + tempArray[i+3] + " ";
-            Log.d(TAG,"tempArray"+temp);
+        for (int i = 0; i <= tempArray.length - 4; i = i + 4) {
+            temp = tempArray[i] + " " + tempArray[i + 1] + " " + tempArray[i + 2] + " " + tempArray[i + 3] + " ";
+            Log.d(TAG, "tempArray" + temp);
             parsedrules.add(temp);
         }
 
@@ -106,27 +101,5 @@ public class RuleActivity extends Activity {
         startActivity(i);
 
     }
-//
-//    private class MyOnClickListener implements View.OnClickListener {
-//
-//        private final Context context;
-//
-//        private MyOnClickListener(Context context) {
-//            this.context = context;
-//        }
-//
-//        @Override
-//        public void onClick(View v) {
-//            int selectedItemPosition = recyclerView.getChildPosition(v);
-//            RecyclerView.ViewHolder viewHolder
-//                    = recyclerView.findViewHolderForPosition(selectedItemPosition);
-//            ImageButton deleteButton = (ImageButton) viewHolder.itemView.findViewById(R.id.deleteButton);
-//            Log.d(TAG,"Clicked at "+ selectedItemPosition);
-//        }
-//
-//        private void showItemList(View v) {
-//
-//        }
-//    }
 
 }

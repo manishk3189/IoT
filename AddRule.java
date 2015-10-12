@@ -1,9 +1,7 @@
 package com.example.abgomsale.iot;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,13 +14,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-
+/**
+ * Add the fuzzy logic rule to the exisiting rule block.
+ * Perform Validation if rule is already exisitng, do not add the rule and notify user.
+ */
 public class AddRule extends Activity {
 
-    private Spinner temp_spinner,connector_spinner,ambient_spinner,blind_spinner;
+    private Spinner temp_spinner, connector_spinner, ambient_spinner, blind_spinner;
     private Button save_rule;
     public static String rule;
     private static String rule_part1 = "na";
@@ -31,47 +31,48 @@ public class AddRule extends Activity {
     private static String rule_part4 = "na";
     private static String TAG = "AddRuleActivity";
     private boolean flag = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_rule);
 
-        temp_spinner = (Spinner)findViewById(R.id.temp_spinner);
-        connector_spinner =  (Spinner)findViewById(R.id.connector_spinner);
-        ambient_spinner =  (Spinner)findViewById(R.id.ambient_spinner);
-        blind_spinner =  (Spinner)findViewById(R.id.blind_spinner);
-        save_rule = (Button)findViewById(R.id.button_add);
+        //find the view of the spinner
+        temp_spinner = (Spinner) findViewById(R.id.temp_spinner);
+        connector_spinner = (Spinner) findViewById(R.id.connector_spinner);
+        ambient_spinner = (Spinner) findViewById(R.id.ambient_spinner);
+        blind_spinner = (Spinner) findViewById(R.id.blind_spinner);
+        save_rule = (Button) findViewById(R.id.button_add);
 
 
         addItemsOnSpinner();
 
         addListenerOnSpinnerItemSelection();
+
+        /**
+         * Validate the rules added by the user
+         */
         save_rule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
+                Log.d(TAG, "SIZE OF MY RULESS" + CategoryDetails.myRules.size());
 
+                if (rule_part1.equalsIgnoreCase("na") && rule_part3.equalsIgnoreCase("na")) {
+                    Toast.makeText(getApplicationContext(), "Something is not right!! Please check the rules again", Toast.LENGTH_SHORT).show();
+                } else if ((rule_part1.equalsIgnoreCase("na") || rule_part3.equalsIgnoreCase("na")) && (!rule_part2.equalsIgnoreCase("na"))) {
+                    Toast.makeText(getApplicationContext(), "Something is not right!! Please check the rules again", Toast.LENGTH_SHORT).show();
+                } else if ((!rule_part1.equalsIgnoreCase("na") && !rule_part3.equalsIgnoreCase("na")) && (rule_part2.equalsIgnoreCase("na"))) {
+                    Toast.makeText(getApplicationContext(), "Something is not right!! Please check the rules again", Toast.LENGTH_SHORT).show();
 
-                Log.d(TAG,"SIZE OF MY RULESS" + CategoryDetails.myRules.size());
+                } else {
+                    rule = rule_part1 + " " + rule_part2 + " " + rule_part3 + " " + rule_part4;
 
-                if(rule_part1.equalsIgnoreCase("na") && rule_part3.equalsIgnoreCase("na")) {
-                    Toast.makeText(getApplicationContext(),"Something is not right!! Please check the rules again",Toast.LENGTH_SHORT).show();
-                }
-                else if((rule_part1.equalsIgnoreCase("na") || rule_part3.equalsIgnoreCase("na"))&&(!rule_part2.equalsIgnoreCase("na"))) {
-                    Toast.makeText(getApplicationContext(),"Something is not right!! Please check the rules again",Toast.LENGTH_SHORT).show();
-                }
-                else if ((!rule_part1.equalsIgnoreCase("na") && !rule_part3.equalsIgnoreCase("na"))&&(rule_part2.equalsIgnoreCase("na"))) {
-                    Toast.makeText(getApplicationContext(),"Something is not right!! Please check the rules again",Toast.LENGTH_SHORT).show();
-
-                }
-                 else {  rule = rule_part1 + " " + rule_part2 + " " + rule_part3 + " " + rule_part4;
-
-                   Log.d(TAG, "inside Rule :" + rule);
-                    if(CategoryDetails.myRules.contains(rule)) {
-                        Toast.makeText(getApplicationContext(),"Rule is already in the list",Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    Log.d(TAG, "inside Rule :" + rule);
+                    if (CategoryDetails.myRules.contains(rule)) {
+                        Toast.makeText(getApplicationContext(), "Rule is already in the list", Toast.LENGTH_SHORT).show();
+                    } else {
                         try {
                             Toast.makeText(getApplicationContext(), "Rule added Successfully!!", Toast.LENGTH_SHORT).show();
                             new SendJSONRequest().execute("addRule");
@@ -81,9 +82,9 @@ public class AddRule extends Activity {
 
                             Intent i = new Intent(AddRule.this, MainActivity.class);
                             startActivity(i);
-                        } catch (Exception e) { }
+                        } catch (Exception e) {
+                        }
                     }
-
 
 
                 }
@@ -121,7 +122,12 @@ public class AddRule extends Activity {
 
         //Add spinner for temperature
         List<String> list = new ArrayList<String>();
-        list.add("freezing");list.add("cold");list.add("comfort");list.add("warm");list.add("hot");list.add("Ignore");
+        list.add("freezing");
+        list.add("cold");
+        list.add("comfort");
+        list.add("warm");
+        list.add("hot");
+        list.add("Ignore");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
@@ -130,7 +136,9 @@ public class AddRule extends Activity {
 
         //Add spinner for Connector
         List<String> list1 = new ArrayList<String>();
-        list1.add("AND");list1.add("OR");list1.add("Ignore");
+        list1.add("AND");
+        list1.add("OR");
+        list1.add("Ignore");
 
         ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list1);
@@ -140,7 +148,10 @@ public class AddRule extends Activity {
 
         //Ambient Spinner
         List<String> list2 = new ArrayList<String>();
-        list2.add("dark");list2.add("dim");list2.add("bright");list2.add("Ignore");
+        list2.add("dark");
+        list2.add("dim");
+        list2.add("bright");
+        list2.add("Ignore");
 
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list2);
@@ -149,7 +160,9 @@ public class AddRule extends Activity {
 
         //Blind Spinner
         List<String> list3 = new ArrayList<String>();
-        list3.add("open");list3.add("half");list3.add("close");
+        list3.add("open");
+        list3.add("half");
+        list3.add("close");
 
         ArrayAdapter<String> dataAdapter3 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list3);
@@ -158,54 +171,53 @@ public class AddRule extends Activity {
 
 
     }
+
     public void addListenerOnSpinnerItemSelection() {
-       temp_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-           @Override
-           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               rule_part1 = temp_spinner.getSelectedItem().toString();
-               if(rule_part1.equalsIgnoreCase("Ignore"))
-                   rule_part1 = "na";
-               Log.d(TAG,"1 "+rule_part1);
+        temp_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                rule_part1 = temp_spinner.getSelectedItem().toString();
+                if (rule_part1.equalsIgnoreCase("Ignore"))
+                    rule_part1 = "na";
+                Log.d(TAG, "1 " + rule_part1);
 
-           }
+            }
 
-           @Override
-           public void onNothingSelected(AdapterView<?> parent) {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-               //rule_part1 = "na";
-           }
-       });
+            }
+        });
 
 
-    connector_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            rule_part2 = connector_spinner.getSelectedItem().toString();
-            Log.d(TAG,"2 "+parent.getAdapter().getItem(position));
-            if(rule_part2.equalsIgnoreCase("Ignore"))
-                rule_part2 = "na";
+        connector_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                rule_part2 = connector_spinner.getSelectedItem().toString();
+                Log.d(TAG, "2 " + parent.getAdapter().getItem(position));
+                if (rule_part2.equalsIgnoreCase("Ignore"))
+                    rule_part2 = "na";
 
-        }
+            }
 
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-            rule_part2 = "na";
-        }
-    });
+            }
+        });
 
         ambient_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 rule_part3 = ambient_spinner.getSelectedItem().toString();
-                if(rule_part3.equalsIgnoreCase("Ignore"))
+                if (rule_part3.equalsIgnoreCase("Ignore"))
                     rule_part3 = "na";
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                //rule_part3 = "na";
+
             }
         });
 
@@ -219,8 +231,7 @@ public class AddRule extends Activity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                //rule_part4 = "na";
             }
         });
-}
+    }
 }

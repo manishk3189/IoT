@@ -11,9 +11,9 @@ import java.util.Arrays;
  */
 public class CategoryDetails {
 
-    public static String[] cardHeading = {"Temperature","Ambient Light","Blind Status"};
+    public static String[] cardHeading = {"Temperature", "Ambient Light", "Blind Status"};
 
-    static Integer[] id_ = {0, 1, 2, 3, 4, 5, 6, 7,8};
+    static Integer[] id_ = {0, 1, 2, 3, 4, 5, 6, 7, 8};
 
     static ArrayList<Integer> myCardColors = new ArrayList<Integer>(Arrays.asList(
             Integer.valueOf(Color.parseColor("#F44336")), // Red 500
@@ -36,30 +36,28 @@ public class CategoryDetails {
             Integer.valueOf(Color.parseColor("#795548")))); // Brown 500
 
 
-static ArrayList<Integer> myTempColors = new ArrayList<Integer>(Arrays.asList(
-        Integer.valueOf(Color.parseColor("#0D47A1")), // BLUE 900
-        Integer.valueOf(Color.parseColor("#2196F3")), // BLUE 500
-        Integer.valueOf(Color.parseColor("#689F38")), // GREEN 700
-        Integer.valueOf(Color.parseColor("#FF6C00")), // ORANGE 800
-        Integer.valueOf(Color.parseColor("#FF3D00")))); // RED A400
+    static ArrayList<Integer> myTempColors = new ArrayList<Integer>(Arrays.asList(
+            Integer.valueOf(Color.parseColor("#0D47A1")), // BLUE 900
+            Integer.valueOf(Color.parseColor("#2196F3")), // BLUE 500
+            Integer.valueOf(Color.parseColor("#689F38")), // GREEN 700
+            Integer.valueOf(Color.parseColor("#FF6C00")), // ORANGE 800
+            Integer.valueOf(Color.parseColor("#FF3D00")))); // RED A400
 
 
-        static ArrayList<Integer> myAmbientColors = new ArrayList<Integer>(Arrays.asList(
-                Integer.valueOf(Color.parseColor("#212121")), // Black 900
-                Integer.valueOf(Color.parseColor("#757575")), // grey 500
-                Integer.valueOf(Color.parseColor("#78909C")))); // Orange A400
+    static ArrayList<Integer> myAmbientColors = new ArrayList<Integer>(Arrays.asList(
+            Integer.valueOf(Color.parseColor("#212121")), // Black 900
+            Integer.valueOf(Color.parseColor("#757575")), // grey 500
+            Integer.valueOf(Color.parseColor("#78909C")))); // Orange A400
 
 
-        static String ambient ;
-        static String temperature;
-        static String blind;
+    static String ambient;
+    static String temperature;
+    static String blind;
 
 
-        static String receivedRules;
+    static String receivedRules;
 
-        static String notfication_received;
-
-        static  ArrayList<String> myRules;
+    static ArrayList<String> myRules;
 
 }
 

@@ -3,10 +3,6 @@ package com.example.abgomsale.iot;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
 import android.util.Log;
 
 import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
@@ -30,7 +26,7 @@ public class SensorService extends Service {
 
     public static class Handler extends Thread {
 
-        private boolean isRunning  = false;
+        private boolean isRunning = false;
         Socket socket;
 
         BufferedReader in;
@@ -99,11 +95,8 @@ public class SensorService extends Service {
             }
 
 
-
-            }
         }
-
-
+    }
 
 
     @Override
@@ -112,7 +105,7 @@ public class SensorService extends Service {
         try {
 
         } catch (Exception e) {
-            Log.e(TAG,e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
 
         isRunning = true;
@@ -132,14 +125,13 @@ public class SensorService extends Service {
                 ServerSocket listener = null;
                 try {
                     listener = new ServerSocket(port);
-                    while(true) {
+                    while (true) {
                         new Handler(listener.accept()).start();
                     }
 
                 } catch (Exception e) {
 
-                }
-                finally {
+                } finally {
                     try {
                         listener.close();
                     } catch (Exception e) {
@@ -163,7 +155,7 @@ public class SensorService extends Service {
     @Override
     public void onDestroy() {
 
-        Log.d(TAG,"I am dying");
+        Log.d(TAG, "I am dying");
         isRunning = false;
 
         Log.i(TAG, "Service onDestroy");

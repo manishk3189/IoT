@@ -1,5 +1,4 @@
 package com.example.abgomsale.iot;
-import java.util.ArrayList;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -14,8 +13,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class ListDisplay extends ListActivity {
     ProgressDialog dialog;
@@ -25,7 +25,9 @@ public class ListDisplay extends ListActivity {
     private static ArrayList<CategoryData> categories;
     public static int itemDeletePosition;
 
-    /** Declaring an ArrayAdapter to set items to ListView */
+    /**
+     * Declaring an ArrayAdapter to set items to ListView
+     */
     public ArrayAdapter adapter;
 
     @Override
@@ -51,7 +53,7 @@ public class ListDisplay extends ListActivity {
             public void onClick(View v) {
 
                 int itemCount = getListView().getCount();
-                if(itemCount > 1 ) {
+                if (itemCount > 1) {
 
 
                     /** Getting the checked items from the listview */
@@ -73,14 +75,11 @@ public class ListDisplay extends ListActivity {
                     Toast.makeText(getApplicationContext(), "Rule deleted Successfully!!", Toast.LENGTH_SHORT).show();
                     RefreshRules refreshRules = new RefreshRules();
                     refreshRules.execute("Start");
-                }
-                else {
+                } else {
                     Toast.makeText(getApplicationContext(), "Atleast one Rule should be present", Toast.LENGTH_LONG).show();
                 }
             }
         };
-
-
 
 
         /** Setting the event listener for the delete button */
@@ -95,30 +94,27 @@ public class ListDisplay extends ListActivity {
         String antecedent = null;
         String consequent = null;
 
-        if(temp[1].equalsIgnoreCase("na")) {
-            if(!temp[0].equalsIgnoreCase("na")) {
-                antecedent = "If temperature IS "+ temp[0] + "THEN";
-                consequent = "blind is " + temp[3] ;
+        if (temp[1].equalsIgnoreCase("na")) {
+            if (!temp[0].equalsIgnoreCase("na")) {
+                antecedent = "If temperature IS " + temp[0] + "THEN";
+                consequent = "blind is " + temp[3];
+                rule.add(antecedent);
+                rule.add(consequent);
+                return rule;
+            } else {
+                antecedent = "If ambient IS " + temp[2] + "THEN";
+                consequent = "blind is " + temp[3];
                 rule.add(antecedent);
                 rule.add(consequent);
                 return rule;
             }
-            else {
-                antecedent = "If ambient IS "+ temp[2] + "THEN";
-                consequent = "blind is " + temp[3] ;
-                rule.add(antecedent);
-                rule.add(consequent);
-                return rule;
-            }
-        }
-        else {
-            antecedent = "If temperature IS "+ temp[0] + " " + temp[1].toUpperCase() +  " ambient IS " + temp[2] + " THEN";
-            consequent = "blind is " + temp[3] ;
+        } else {
+            antecedent = "If temperature IS " + temp[0] + " " + temp[1].toUpperCase() + " ambient IS " + temp[2] + " THEN";
+            consequent = "blind is " + temp[3];
             rule.add(antecedent);
             rule.add(consequent);
             return rule;
         }
-
 
 
     }
@@ -156,7 +152,7 @@ public class ListDisplay extends ListActivity {
                 parsedrules.add(temp);
             }
             CategoryDetails.myRules = parsedrules;
-            Log.d(TAG,"MYRULES: "+ CategoryDetails.myRules);
+            Log.d(TAG, "MYRULES: " + CategoryDetails.myRules);
 
             categories = new ArrayList<CategoryData>();
             for (int i = 0; i < parsedrules.size(); i++) {
@@ -176,7 +172,7 @@ public class ListDisplay extends ListActivity {
                 list.add(result.get(0) + " " + result.get(1));
 
             }
-                return null;
+            return null;
 
         }
 
@@ -194,7 +190,7 @@ public class ListDisplay extends ListActivity {
         }
     }
 
-    public class RefreshRules extends AsyncTask<String,String,String> {
+    public class RefreshRules extends AsyncTask<String, String, String> {
 
         String TAG = "LoadList";
         private ProgressDialog mProgDialog;
@@ -231,7 +227,7 @@ public class ListDisplay extends ListActivity {
             }*/
             StringBuilder sb = new StringBuilder();
 
-            for(String s: parsedrules) {
+            for (String s : parsedrules) {
                 sb.append(s);
                 sb.append(" ");
 
@@ -244,7 +240,7 @@ public class ListDisplay extends ListActivity {
                     (TAG, " after delete receivedRules:" + CategoryDetails.receivedRules);
 
 
-            String method = "request"+","+itemDeletePosition;
+            String method = "request" + "," + itemDeletePosition;
             new SendJSONRequest().execute("remove");
             return null;
 
@@ -258,9 +254,6 @@ public class ListDisplay extends ListActivity {
             if (mProgDialog.isShowing()) {
                 mProgDialog.dismiss();
             }
-
-
-
 
 
         }
@@ -283,7 +276,7 @@ public class ListDisplay extends ListActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.rule_add) {
-            Intent i = new Intent(ListDisplay.this,AddRule.class);
+            Intent i = new Intent(ListDisplay.this, AddRule.class);
             startActivity(i);
             return true;
         }

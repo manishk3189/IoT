@@ -1,13 +1,11 @@
 package com.example.abgomsale.iot;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,13 +43,12 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
             deleteButton.setOnClickListener(this);
 
 
-
         }
 
         @Override
-    public void onClick(View v) {
+        public void onClick(View v) {
             pos = getPosition();
-            Log.d(TAG,pos+"");
+            Log.d(TAG, pos + "");
             categoryDataSet.remove(pos);
             notifyItemRemoved(pos);
             //new SendJSONRequest().execute("remove");
@@ -70,11 +67,11 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
     // Create new views (invoked by the layout manager)
     @Override
     public MyListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+                                                       int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_list, parent, false);
         // set the view's size, margins, paddings and layout parameters
-       // v.setOnClickListener(RuleActivity.myOnClickListener);
+        // v.setOnClickListener(RuleActivity.myOnClickListener);
         ViewHolder vh = new ViewHolder(v);
 
         return vh;
@@ -82,17 +79,17 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder,final int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
         pos = position;
-        if(position < 2)
+        if (position < 2)
             holder.deleteButton.setVisibility(View.GONE);
 
 
         String temp_text = categoryDataSet.get(position).getCategoryName();
-        Log.d("MyListAdapter",temp_text);
+        Log.d("MyListAdapter", temp_text);
         String[] temp = temp_text.split(" ");
         ArrayList<String> result = generateDisplayRules(temp);
         holder.txtRule.setText(result.get(0));
@@ -113,25 +110,23 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
         String antecedent = null;
         String consequent = null;
 
-        if(temp[1].equalsIgnoreCase("na")) {
-            if(!temp[0].equalsIgnoreCase("na")) {
-                antecedent = "If temperature IS "+ temp[0] + "THEN";
-                consequent = "blind is " + temp[3] ;
+        if (temp[1].equalsIgnoreCase("na")) {
+            if (!temp[0].equalsIgnoreCase("na")) {
+                antecedent = "If temperature IS " + temp[0] + "THEN";
+                consequent = "blind is " + temp[3];
+                rule.add(antecedent);
+                rule.add(consequent);
+                return rule;
+            } else {
+                antecedent = "If ambient IS " + temp[2] + "THEN";
+                consequent = "blind is " + temp[3];
                 rule.add(antecedent);
                 rule.add(consequent);
                 return rule;
             }
-            else {
-                antecedent = "If ambient IS "+ temp[2] + "THEN";
-                consequent = "blind is " + temp[3] ;
-                rule.add(antecedent);
-                rule.add(consequent);
-                return rule;
-            }
-        }
-        else {
-            antecedent = "If temperature IS "+ temp[0] + " " + temp[1].toUpperCase() +  " ambient IS " + temp[2] + " THEN";
-            consequent = "blind is " + temp[3] ;
+        } else {
+            antecedent = "If temperature IS " + temp[0] + " " + temp[1].toUpperCase() + " ambient IS " + temp[2] + " THEN";
+            consequent = "blind is " + temp[3];
             rule.add(antecedent);
             rule.add(consequent);
             return rule;

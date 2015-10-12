@@ -3,22 +3,15 @@ package com.example.abgomsale.iot;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-
-import net.sourceforge.jFuzzyLogic.rule.Rule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +41,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_grid);
 
 
-        recyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         layoutManager = new LinearLayoutManager(this);
@@ -56,7 +49,7 @@ public class MainActivity extends Activity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         categories = new ArrayList<CategoryData>();
-        for(int i = 0; i < CategoryDetails.cardHeading.length; i++) {
+        for (int i = 0; i < CategoryDetails.cardHeading.length; i++) {
             categories.add(new CategoryData(
                     CategoryDetails.cardHeading[i],
                     0,
@@ -92,7 +85,7 @@ public class MainActivity extends Activity {
             return true;
         }
 
-        if(id == R.id.rules) {
+        if (id == R.id.rules) {
             new SendJSONRequest().execute("getRules");
             Intent i = new Intent(MainActivity.this, ListDisplay.class);
             startActivity(i);
@@ -102,46 +95,25 @@ public class MainActivity extends Activity {
     }
 
 
+    private class MyOnClickListener implements View.OnClickListener {
 
-	private class MyOnClickListener implements View.OnClickListener {
+        private final Context context;
 
-		private final Context context;
+        private MyOnClickListener(Context context) {
+            this.context = context;
+        }
 
-		private MyOnClickListener(Context context) {
-			this.context = context;
-		}
-
-		@Override
-		public void onClick(View v) {
-			new SendJSONRequest().execute();
-		}
-
-	}
-
-/*    @Override
-    public void onPause(){
-        Intent service_intent = new Intent(MainActivity.this,SensorService.class);
-        stopService(service_intent);
-        super.onPause();
+        @Override
+        public void onClick(View v) {
+            new SendJSONRequest().execute();
+        }
 
     }
 
-    @Override
-    public void onDestroy()
-    {
-        Intent service_intent = new Intent(MainActivity.this,SensorService.class);
-        stopService(service_intent);
-        super.onDestroy();
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Intent service_intent = new Intent(MainActivity.this,SensorService.class);
-        startService(service_intent);
-
-    }*/
-
+    /**
+     * Generate random numbers to display card color dynamically
+     */
     public void getRandomNumber() {
 
         Random random = new Random();

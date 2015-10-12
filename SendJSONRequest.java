@@ -20,9 +20,7 @@ public class SendJSONRequest extends AsyncTask<String, String, String> {
         String type = params[0];
         Log.d(TAG, type);
         String serverURL_text = "10.0.1.6:8080";
-        String request_method = type;//getResources().getString(R.string.getTemp);
-/*            String serverURL_text = et_server_url.getText().toString();
-            String request_method = et_requst_method.getText().toString();*/
+        String request_method = type;
         Log.d(TAG + " URL", serverURL_text);
         Log.d(TAG + " method", request_method);
 
@@ -41,16 +39,15 @@ public class SendJSONRequest extends AsyncTask<String, String, String> {
     protected void onPostExecute(String result) {
         Log.d("debug", result);
         Log.d("debug", response_txt);
-        Log.d(TAG,   callType+" "+ response_txt);
+        Log.d(TAG, callType + " " + response_txt);
 
-        if(callType.contains("getTemp"))
+        if (callType.contains("getTemp"))
 
-        CategoryDetails.temperature = response_txt;
-        else if(callType.contains("getAmbient")) {
+            CategoryDetails.temperature = response_txt;
+        else if (callType.contains("getAmbient")) {
 
             CategoryDetails.ambient = response_txt;
-        }
-        else if(callType.contains("getBlindState"))
+        } else if (callType.contains("getBlindState"))
             CategoryDetails.blind = response_txt;
         else if (callType.contains("getRules")) {
             CategoryDetails.receivedRules = response_txt;

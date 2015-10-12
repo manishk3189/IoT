@@ -3,15 +3,14 @@ package com.example.abgomsale.iot;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.antlr.works.SplashScreen;
-
-
+/**
+ * Splash Activity to initiate the components before starting the app.
+ */
 public class LaunchActivity extends Activity {
 
     private static int SPLASH_TIME_OUT = 3000;
@@ -28,7 +27,7 @@ public class LaunchActivity extends Activity {
         new SendJSONRequest().execute("getTemp");
         new SendJSONRequest().execute("getBlindState");
         new SendJSONRequest().execute("getRules");
-        Intent service_intent = new Intent(LaunchActivity.this,SensorService.class);
+        Intent service_intent = new Intent(LaunchActivity.this, SensorService.class);
         startService(service_intent);
 
         new Handler().postDelayed(new Runnable() {
@@ -41,8 +40,6 @@ public class LaunchActivity extends Activity {
             @Override
             public void run() {
                 // This method will be executed once the timer is over
-                // Start your app main activity
-
 
                 Intent i = new Intent(LaunchActivity.this, MainActivity.class);
                 startActivity(i);
@@ -52,7 +49,6 @@ public class LaunchActivity extends Activity {
             }
         }, SPLASH_TIME_OUT);
     }
-
 
 
     @Override
