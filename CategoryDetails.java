@@ -57,6 +57,10 @@ static ArrayList<Integer> myTempColors = new ArrayList<Integer>(Arrays.asList(
 
         static String receivedRules;
 
+        static String notfication_received;
+
+        static  ArrayList<String> myRules;
+
 }
 
 

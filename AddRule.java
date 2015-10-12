@@ -1,6 +1,8 @@
 package com.example.abgomsale.iot;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,11 +25,12 @@ public class AddRule extends Activity {
     private Spinner temp_spinner,connector_spinner,ambient_spinner,blind_spinner;
     private Button save_rule;
     public static String rule;
-    private static String rule_part1;
-    private static String rule_part2;
-    private static String rule_part3;
-    private static String rule_part4;
+    private static String rule_part1 = "na";
+    private static String rule_part2 = "na";
+    private static String rule_part3 = "na";
+    private static String rule_part4 = "na";
     private static String TAG = "AddRuleActivity";
+    private boolean flag = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +49,45 @@ public class AddRule extends Activity {
         save_rule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rule = rule_part1 + " " + rule_part2 + " " + rule_part3 + " " + rule_part4;
-                new SendJSONRequest().execute("addRule");
+
+
+
+
+                Log.d(TAG,"SIZE OF MY RULESS" + CategoryDetails.myRules.size());
+
+                if(rule_part1.equalsIgnoreCase("na") && rule_part3.equalsIgnoreCase("na")) {
+                    Toast.makeText(getApplicationContext(),"Something is not right!! Please check the rules again",Toast.LENGTH_SHORT).show();
+                }
+                else if((rule_part1.equalsIgnoreCase("na") || rule_part3.equalsIgnoreCase("na"))&&(!rule_part2.equalsIgnoreCase("na"))) {
+                    Toast.makeText(getApplicationContext(),"Something is not right!! Please check the rules again",Toast.LENGTH_SHORT).show();
+                }
+                else if ((!rule_part1.equalsIgnoreCase("na") && !rule_part3.equalsIgnoreCase("na"))&&(rule_part2.equalsIgnoreCase("na"))) {
+                    Toast.makeText(getApplicationContext(),"Something is not right!! Please check the rules again",Toast.LENGTH_SHORT).show();
+
+                }
+                 else {  rule = rule_part1 + " " + rule_part2 + " " + rule_part3 + " " + rule_part4;
+
+                   Log.d(TAG, "inside Rule :" + rule);
+                    if(CategoryDetails.myRules.contains(rule)) {
+                        Toast.makeText(getApplicationContext(),"Rule is already in the list",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        try {
+                            Toast.makeText(getApplicationContext(), "Rule added Successfully!!", Toast.LENGTH_SHORT).show();
+                            new SendJSONRequest().execute("addRule");
+                            Thread.sleep(1000);
+                            new SendJSONRequest().execute("getRules");
+
+
+                            Intent i = new Intent(AddRule.this, MainActivity.class);
+                            startActivity(i);
+                        } catch (Exception e) { }
+                    }
+
+
+
+                }
+
             }
         });
     }
@@ -81,7 +121,7 @@ public class AddRule extends Activity {
 
         //Add spinner for temperature
         List<String> list = new ArrayList<String>();
-        list.add("Ignore");list.add("freezing");list.add("cold");list.add("comfort");list.add("warm");list.add("hot");
+        list.add("freezing");list.add("cold");list.add("comfort");list.add("warm");list.add("hot");list.add("Ignore");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
@@ -90,7 +130,7 @@ public class AddRule extends Activity {
 
         //Add spinner for Connector
         List<String> list1 = new ArrayList<String>();
-        list1.add("Ignore");list1.add("AND");list1.add("OR");
+        list1.add("AND");list1.add("OR");list1.add("Ignore");
 
         ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list1);
@@ -100,7 +140,7 @@ public class AddRule extends Activity {
 
         //Ambient Spinner
         List<String> list2 = new ArrayList<String>();
-        list2.add("Ignore");list2.add("dark");list2.add("dim");list2.add("bright");
+        list2.add("dark");list2.add("dim");list2.add("bright");list2.add("Ignore");
 
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list2);
@@ -123,12 +163,16 @@ public class AddRule extends Activity {
            @Override
            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                rule_part1 = temp_spinner.getSelectedItem().toString();
+               if(rule_part1.equalsIgnoreCase("Ignore"))
+                   rule_part1 = "na";
                Log.d(TAG,"1 "+rule_part1);
+
            }
 
            @Override
            public void onNothingSelected(AdapterView<?> parent) {
 
+               //rule_part1 = "na";
            }
        });
 
@@ -138,11 +182,15 @@ public class AddRule extends Activity {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             rule_part2 = connector_spinner.getSelectedItem().toString();
             Log.d(TAG,"2 "+parent.getAdapter().getItem(position));
+            if(rule_part2.equalsIgnoreCase("Ignore"))
+                rule_part2 = "na";
+
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
 
+            rule_part2 = "na";
         }
     });
 
@@ -150,11 +198,14 @@ public class AddRule extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 rule_part3 = ambient_spinner.getSelectedItem().toString();
+                if(rule_part3.equalsIgnoreCase("Ignore"))
+                    rule_part3 = "na";
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                //rule_part3 = "na";
             }
         });
 
@@ -163,11 +214,12 @@ public class AddRule extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 rule_part4 = blind_spinner.getSelectedItem().toString();
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                //rule_part4 = "na";
             }
         });
 }

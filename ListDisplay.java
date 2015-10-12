@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class ListDisplay extends ListActivity {
     ProgressDialog dialog;
@@ -30,8 +31,7 @@ public class ListDisplay extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ///list.add("Android");
-                //list.addAll(Arrays.asList("IPhone","WindowsMobile", "Blackberry", "WebOS", "Ubuntu","Windows7","Max OS X"));
+
         setContentView(R.layout.activity_list_display);
 
 
@@ -49,25 +49,34 @@ public class ListDisplay extends ListActivity {
         OnClickListener listenerDel = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                /** Getting the checked items from the listview */
-                SparseBooleanArray checkedItemPositions = getListView().getCheckedItemPositions();
-                Log.d(
-                        TAG,checkedItemPositions.toString());
-                itemDeletePosition = checkedItemPositions.keyAt(0);
 
                 int itemCount = getListView().getCount();
+                if(itemCount > 1 ) {
 
-                for(int i=itemCount-1; i >= 0; i--){
-                    if(checkedItemPositions.get(i)){
-                        adapter.remove(list.get(i));
+
+                    /** Getting the checked items from the listview */
+                    SparseBooleanArray checkedItemPositions = getListView().getCheckedItemPositions();
+                    Log.d(
+                            TAG, checkedItemPositions.toString());
+                    itemDeletePosition = checkedItemPositions.keyAt(0);
+
+                    //int itemCount = getListView().getCount();
+
+                    for (int i = itemCount - 1; i >= 0; i--) {
+                        if (checkedItemPositions.get(i)) {
+                            adapter.remove(list.get(i));
+                        }
                     }
+                    checkedItemPositions.clear();
+                    adapter.notifyDataSetChanged();
+
+                    Toast.makeText(getApplicationContext(), "Rule deleted Successfully!!", Toast.LENGTH_SHORT).show();
+                    RefreshRules refreshRules = new RefreshRules();
+                    refreshRules.execute("Start");
                 }
-                checkedItemPositions.clear();
-                adapter.notifyDataSetChanged();
-
-                RefreshRules refreshRules = new RefreshRules();
-                refreshRules.execute("Start");
-
+                else {
+                    Toast.makeText(getApplicationContext(), "Atleast one Rule should be present", Toast.LENGTH_LONG).show();
+                }
             }
         };
 
@@ -123,6 +132,7 @@ public class ListDisplay extends ListActivity {
         @Override
         protected void onPreExecute() {
             mProgDialog = ProgressDialog.show(ListDisplay.this, "", "Loading the latest rules, Please wait....", true);
+            new SendJSONRequest().execute("getRules");
         }
 
         @Override
@@ -141,10 +151,12 @@ public class ListDisplay extends ListActivity {
 
             String temp;
             for (int i = 0; i <= tempArray.length - 4; i = i + 4) {
-                temp = tempArray[i] + " " + tempArray[i + 1] + " " + tempArray[i + 2] + " " + tempArray[i + 3] + " ";
+                temp = tempArray[i] + " " + tempArray[i + 1] + " " + tempArray[i + 2] + " " + tempArray[i + 3];
                 Log.d(TAG, "tempArray" + temp);
                 parsedrules.add(temp);
             }
+            CategoryDetails.myRules = parsedrules;
+            Log.d(TAG,"MYRULES: "+ CategoryDetails.myRules);
 
             categories = new ArrayList<CategoryData>();
             for (int i = 0; i < parsedrules.size(); i++) {
@@ -162,8 +174,7 @@ public class ListDisplay extends ListActivity {
                 String[] temp1 = temp_text.split(" ");
                 ArrayList<String> result = generateDisplayRules(temp1);
                 list.add(result.get(0) + " " + result.get(1));
-                //list.add(result.get(1));
-                //adapter.notifyDataSetChanged();
+
             }
                 return null;
 
@@ -177,6 +188,7 @@ public class ListDisplay extends ListActivity {
             if (mProgDialog.isShowing()) {
                 mProgDialog.dismiss();
             }
+
             adapter.notifyDataSetChanged();
 
         }
@@ -211,6 +223,7 @@ public class ListDisplay extends ListActivity {
             }
 
             parsedrules.remove(itemDeletePosition);
+            CategoryDetails.myRules = parsedrules;
 
 /*            String builder = null;
             for(String s: parsedrules) {
@@ -276,5 +289,11 @@ public class ListDisplay extends ListActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
     }
 }

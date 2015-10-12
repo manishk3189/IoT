@@ -118,7 +118,7 @@ public class MainActivity extends Activity {
 
 	}
 
-    @Override
+/*    @Override
     public void onPause(){
         Intent service_intent = new Intent(MainActivity.this,SensorService.class);
         stopService(service_intent);
@@ -140,7 +140,7 @@ public class MainActivity extends Activity {
         Intent service_intent = new Intent(MainActivity.this,SensorService.class);
         startService(service_intent);
 
-    }
+    }*/
 
     public void getRandomNumber() {
 
