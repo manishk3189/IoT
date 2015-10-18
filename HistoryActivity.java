@@ -33,7 +33,7 @@ public class HistoryActivity extends Activity {
         for(int i = 0; i < CategoryDetails.sensorResult.size(); i++) {
             Log.d(TAG, CategoryDetails.sensorResult.get(i).toString());
             String result[] = CategoryDetails.sensorResult.get(i).split(" ");
-            list1.add(result[0] + "         " + result[1] + "℉                   "+ result[2] + "            " + result[3]);
+            list1.add(result[0] + "         " + result[1] + "℉          "+ result[2] + "                 " + result[3]);
 
 
         }

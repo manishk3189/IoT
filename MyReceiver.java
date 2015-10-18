@@ -48,15 +48,13 @@ public class MyReceiver extends BroadcastReceiver {
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(
                         context)
                         // Set Icon
-                        .setSmallIcon(R.drawable.abc_btn_check_material)
+                        .setSmallIcon(android.R.drawable.ic_dialog_alert)
                                 // Set Ticker Message
                         .setTicker(msg)
                                 // Set Title
                         .setContentTitle(strtitle)
                                 // Set Text
                         .setContentText(msg)
-                                // Add an Action Button below Notification
-                        .addAction(android.R.drawable.btn_star, "Action Button", pIntent)
                                 // Set PendingIntent into Notification
                         .setContentIntent(pIntent)
                                 // Dismiss Notification

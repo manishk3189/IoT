@@ -55,7 +55,7 @@ public class CategoryDetails {
     static String blind;
     static boolean oneTimeFlag = false;
     static boolean oneTimeBlindFlag = false;
-    static double previousValue;
+    static double previousTempValue;
     static double amb_previous;
     static String initial_blindState;
 

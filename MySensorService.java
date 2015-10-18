@@ -5,18 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-
-import com.thetransactioncompany.jsonrpc2.JSONRPC2Request;
-import com.thetransactioncompany.jsonrpc2.JSONRPC2Response;
-import com.thetransactioncompany.jsonrpc2.server.Dispatcher;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 public class MySensorService extends Service {
 
@@ -63,7 +52,7 @@ public class MySensorService extends Service {
 
                     while (true) {
                        try{
-                           Thread.sleep(1000);
+                           Thread.sleep(2000);
 
                     } catch (Exception e) {
                            Log.d(TAG,"Exception thrown by service");
@@ -72,11 +61,14 @@ public class MySensorService extends Service {
                         response = JSONHandler.testJSONRequest("10.0.1.6:8080", "getNotification");
                         String[] res = response.split(" ");
 
-                        current = Double.parseDouble(res[2]);
-                        if(Math.abs(current - CategoryDetails.previousValue) > 2) {
-                            CategoryDetails.sensorResult.add(response);
-                            CategoryDetails.previousValue = current;
-                            Log.d(TAG,"Difference greater than 2");
+                        current = Double.parseDouble(res[1]);
+                        if(Math.abs(current - CategoryDetails.previousTempValue) > 2) {
+                            if(current > 0 && current < 120) {
+
+                                CategoryDetails.sensorResult.add(response);
+                                CategoryDetails.previousTempValue = current;
+                                Log.d(TAG, "Difference greater than 2");
+                            }
                         }
 
                         if(!CategoryDetails.initial_blindState.equalsIgnoreCase(res[3])) {
@@ -92,8 +84,6 @@ public class MySensorService extends Service {
                             sendBroadcast(in);
                             CategoryDetails.initial_blindState = res[3];
                         }
-
-
 
                 }
 

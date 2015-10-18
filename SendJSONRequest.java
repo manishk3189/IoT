@@ -44,6 +44,21 @@ public class SendJSONRequest extends AsyncTask<String, String, String> {
         if (callType.contains("getTemp"))
         {
 
+
+            if(!CategoryDetails.oneTimeFlag) {
+
+                double currentTemp = Double.parseDouble(response_txt);
+                if(currentTemp > 0 && currentTemp < 120 ) {
+                    CategoryDetails.previousTempValue = Double.parseDouble(response_txt);
+
+                }
+                else {
+                    CategoryDetails.previousTempValue = 73;
+                }
+
+                CategoryDetails.oneTimeFlag = true;
+            }
+
             CategoryDetails.temperature = response_txt;
         }
         else if (callType.contains("getAmbient")) {
@@ -63,12 +78,7 @@ public class SendJSONRequest extends AsyncTask<String, String, String> {
         }
 
         else if (callType.contains("getNotification")) {
-            if(!CategoryDetails.oneTimeFlag) {
-                String t[] = response_txt.split(" ");
-                CategoryDetails.amb_previous = Double.parseDouble(t[2]);
-                CategoryDetails.oneTimeFlag = true;
 
-            }
 
         }
 
