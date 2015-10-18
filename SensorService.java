@@ -104,6 +104,8 @@ public class SensorService extends Service {
         Log.i(TAG, "Service onCreate");
         try {
 
+            Log.d(TAG,"Sending the request");
+            new SendJSONRequest().execute("started");
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
@@ -122,10 +124,13 @@ public class SensorService extends Service {
             @Override
             public void run() {
 
-                ServerSocket listener = null;
+/*                ServerSocket listener = null;
                 try {
                     listener = new ServerSocket(port);
+                    Log.d(TAG,"PORT:"+port);
+                    Log.d(TAG,"I am inside run");
                     while (true) {
+                        Log.d(TAG,"inside run");
                         new Handler(listener.accept()).start();
                     }
 
@@ -137,7 +142,8 @@ public class SensorService extends Service {
                     } catch (Exception e) {
 
                     }
-                }
+                }*/
+                Log.d(TAG,"running");
 
             }
         }).start();

@@ -53,11 +53,18 @@ public class CategoryDetails {
     static String ambient;
     static String temperature;
     static String blind;
+    static boolean oneTimeFlag = false;
+    static boolean oneTimeBlindFlag = false;
+    static double previousValue;
+    static double amb_previous;
+    static String initial_blindState;
 
 
     static String receivedRules;
 
     static ArrayList<String> myRules;
+
+    static ArrayList<String> sensorResult = new ArrayList<>();
 
 }
 

@@ -67,6 +67,7 @@ public class JSONHandler {
         try {
             response = mySession.send(request);
 
+
         } catch (JSONRPC2SessionException e) {
 
             Log.e("error", e.getMessage().toString());

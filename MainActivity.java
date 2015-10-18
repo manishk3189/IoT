@@ -88,6 +88,10 @@ public class MainActivity extends Activity {
             Intent i = new Intent(MainActivity.this, ListDisplayActivity.class);
             startActivity(i);
         }
+        else if ( id == R.id.history) {
+            Intent i = new Intent(MainActivity.this, HistoryActivity.class);
+            startActivity(i);
+        }
 
         return super.onOptionsItemSelected(item);
     }
